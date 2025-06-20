@@ -34,6 +34,37 @@ services:
       - postgres
     networks:
       - gestion-produits
+
+  sonarqube:
+    image: sonarqube:community
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_JDBC_URL=jdbc:postgresql://postgres-sonar:5432/sonar
+      - SONAR_JDBC_USERNAME=sonar
+      - SONAR_JDBC_PASSWORD=sonar
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+      - sonarqube_logs:/opt/sonarqube/logs
+    networks:
+      - gestion-produits
+    depends_on:
+      - postgres-sonar
+
+  postgres-sonar:
+    image: postgres
+    container_name: postgres-sonar
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=sonar
+      - POSTGRES_DB=sonar
+    volumes:
+      - postgresql_sonar:/var/lib/postgresql/data
+    networks:
+      - gestion-produits
+
   ###
   jenkins:
     image: jenkins/jenkins:lts
@@ -57,4 +88,8 @@ volumes:
   postgres_data:
     driver: local
   jenkins_home:
+  sonarqube_data:
+  sonarqube_extensions:
+  sonarqube_logs:
+  postgresql_sonar:
 
