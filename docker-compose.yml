@@ -1,0 +1,60 @@
+services:
+  postgres:
+    container_name: postgres-produits
+    image: postgres
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB: produit_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - gestion-produits
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U username -d scolaire-db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  product-api:
+    build: .
+    ports:
+      - "8083:8083"
+    environment:
+      - DB_HOST=postgres-produits
+      - DB_PORT=5432
+      - DB_NAME=produit_db
+      - DB_USERNAME=username
+      - DB_PASSWORD=password
+    depends_on:
+      - postgres
+    networks:
+      - gestion-produits
+  ###
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - "8090:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    networks:
+      - gestion-produits
+    user: root
+
+networks:
+  gestion-produits:
+    driver: bridge
+volumes:
+  postgres_data:
+    driver: local
+  jenkins_home:
+
