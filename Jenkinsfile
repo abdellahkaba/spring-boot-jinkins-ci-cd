@@ -41,12 +41,14 @@ pipeline {
 
         stage('🧪 Tests unitaires') {
 			steps {
-				if(isUnix()){
-					echo '✅ Exécution des tests unitaires'
-                	sh 'mvn test'
-				}else {
-					echo '✅ Exécution des tests unitaires'
-                	sh 'mvn test'
+				script {
+					if(isUnix()) {
+						echo '✅ Exécution des tests unitaires'
+                		sh 'mvn test'
+					}else {
+						echo '✅ Exécution des tests unitaires'
+                		sh 'mvn test'
+					}
 				}
 
             }
