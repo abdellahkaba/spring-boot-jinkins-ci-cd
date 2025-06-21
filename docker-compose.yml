@@ -28,3 +28,7 @@ services:
       - DB_PASSWORD=password
     depends_on:
       - postgres
+
+volumes:
+  postgres_data:
+    driver: local

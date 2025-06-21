@@ -9,9 +9,15 @@ pipeline {
     stages {
 		stage('📦 Vérification des versions') {
 			steps {
-				echo '🔍 Affichage des versions Java et Maven'
-                sh 'java -version'
-                sh 'mvn -version'
+				script {
+					if (isUnix()) {
+						sh 'mvn --version'
+                        sh 'java --version'
+                    } else {
+						bat 'mvn --version'
+                        bat 'java --version'
+                    }
+                }
             }
         }
 
@@ -23,15 +29,26 @@ pipeline {
 
         stage('🏗️ Compilation du projet') {
 			steps {
-				echo '🔨 Compilation avec Maven'
-                sh 'mvn clean compile'
+				script {
+					if (isUnix()) {
+						sh 'mvn clean install'
+                    } else {
+						bat 'mvn clean install'
+                    }
+                }
             }
         }
 
         stage('🧪 Tests unitaires') {
 			steps {
-				echo '✅ Exécution des tests unitaires'
-                sh 'mvn test'
+				if(isUnix()){
+					echo '✅ Exécution des tests unitaires'
+                	sh 'mvn test'
+				}else {
+					echo '✅ Exécution des tests unitaires'
+                	sh 'mvn test'
+				}
+
             }
         }
     }
