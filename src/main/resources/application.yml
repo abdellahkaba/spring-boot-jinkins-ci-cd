@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: gestion-produits
+server:
+  port: 8083
