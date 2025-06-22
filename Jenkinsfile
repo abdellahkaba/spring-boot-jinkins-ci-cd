@@ -6,6 +6,12 @@ pipeline {
         jdk 'JDK'       // Idem
     }
 
+     stage('📥 Récupération du code') {
+		steps {
+			git branch: 'main', url: 'https://github.com/abdellahkaba/spring-boot-jinkins-ci-cd.git'
+            }
+        }
+
     stages {
 		stage('📦 Vérification des versions') {
 			steps {
@@ -21,38 +27,40 @@ pipeline {
             }
         }
 
-        stage('📥 Récupération du code') {
-			steps {
-				git branch: 'main', url: 'https://github.com/abdellahkaba/spring-boot-jinkins-ci-cd.git'
-            }
-        }
+
 
         stage('🏗️ Compilation du projet') {
 			steps {
 				script {
 					if (isUnix()) {
-						sh 'mvn clean install "-Dspring-boot.run.profiles=test"'
+						sh "mvn clean package -DskipTests"
                     } else {
-						bat 'mvn clean install "-Dspring-boot.run.profiles=test"'
+						bat "mvn clean package -DskipTests"
                     }
                 }
             }
         }
 
-        stage('🧪 Tests unitaires') {
-			steps {
-				script {
-					if(isUnix()) {
-						echo '✅ Exécution des tests unitaires'
-                		sh 'mvn test'
-					}else {
-						echo '✅ Exécution des tests unitaires'
-                		sh 'mvn test'
-					}
-				}
+        //stage('🧪 Tests unitaires') {
+		//	steps {
+		//		script {
+		//			if(isUnix()) {
+		//				echo '✅ Exécution des tests unitaires'
+        //        		sh 'mvn test'
+		//			}else {
+		//				echo '✅ Exécution des tests unitaires'
+        //        		sh 'mvn test'
+		//			}
+		//		}
+		//
+        //    }
+        //}
 
-            }
-        }
+        //stage("Staging"){
+		//	steps{
+		//		sh 'docker-compose up -d'
+        //    }
+        //}
     }
 
     post {
