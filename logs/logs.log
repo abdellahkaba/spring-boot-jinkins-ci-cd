@@ -1615,3 +1615,40 @@ Caused by: java.net.ConnectException: Connection refused: getsockopt
 [SpringApplicationShutdownHook] INFO  | org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean | Closing JPA EntityManagerFactory for persistence unit 'default' (AbstractEntityManagerFactoryBean.java:660)
 [SpringApplicationShutdownHook] INFO  | com.zaxxer.hikari.HikariDataSource                           | HikariPool-1 - Shutdown initiated... (HikariDataSource.java:349)
 [SpringApplicationShutdownHook] INFO  | com.zaxxer.hikari.HikariDataSource                           | HikariPool-1 - Shutdown completed. (HikariDataSource.java:351)
+[main] INFO  | org.springframework.test.context.support.AnnotationConfigContextLoaderUtils | Could not detect default configuration classes for test class [com.isi.BackendApplicationTests]: BackendApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration. (AnnotationConfigContextLoaderUtils.java:83)
+[main] INFO  | org.springframework.boot.test.context.SpringBootTestContextBootstrapper | Found @SpringBootConfiguration com.isi.BackendApplication for test class com.isi.BackendApplicationTests (SpringBootTestContextBootstrapper.java:234)
+[background-preinit] INFO  | org.hibernate.validator.internal.util.Version                | HV000001: Hibernate Validator 8.0.2.Final (Version.java:21)
+[main] INFO  | com.isi.BackendApplicationTests                              | Starting BackendApplicationTests using Java 17.0.12 with PID 1176 (started by Kaba in C:\Users\Kaba\Documents\Java EE\backend) (StartupInfoLogger.java:53)
+[main] INFO  | com.isi.BackendApplicationTests                              | No active profile set, falling back to 1 default profile: "default" (SpringApplication.java:652)
+[main] DEBUG | org.springframework.web.context.support.GenericWebApplicationContext | Refreshing org.springframework.web.context.support.GenericWebApplicationContext@22854f2b (AbstractApplicationContext.java:674)
+[main] INFO  | org.springframework.data.repository.config.RepositoryConfigurationDelegate | Bootstrapping Spring Data JPA repositories in DEFAULT mode. (RepositoryConfigurationDelegate.java:143)
+[main] INFO  | org.springframework.data.repository.config.RepositoryConfigurationDelegate | Finished Spring Data repository scanning in 195 ms. Found 2 JPA repository interfaces. (RepositoryConfigurationDelegate.java:211)
+[main] INFO  | org.hibernate.jpa.internal.util.LogHelper                    | HHH000204: Processing PersistenceUnitInfo [name: default] (LogHelper.java:31)
+[main] INFO  | org.hibernate.Version                                        | HHH000412: Hibernate ORM core version 6.6.5.Final (Version.java:44)
+[main] INFO  | org.hibernate.cache.internal.RegionFactoryInitiator          | HHH000026: Second-level cache disabled (RegionFactoryInitiator.java:50)
+[main] INFO  | org.springframework.orm.jpa.persistenceunit.SpringPersistenceUnitInfo | No LoadTimeWeaver setup: ignoring JPA class transformer (SpringPersistenceUnitInfo.java:87)
+[main] INFO  | com.zaxxer.hikari.HikariDataSource                           | HikariPool-1 - Starting... (HikariDataSource.java:109)
+[main] INFO  | com.zaxxer.hikari.pool.HikariPool                            | HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@290df888 (HikariPool.java:554)
+[main] INFO  | com.zaxxer.hikari.HikariDataSource                           | HikariPool-1 - Start completed. (HikariDataSource.java:122)
+[main] WARN  | org.hibernate.orm.deprecation                                | HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default) (DialectFactoryImpl.java:153)
+[main] INFO  | org.hibernate.orm.connections.pooling                        | HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 17.5
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown (JdbcEnvironmentInitiator.java:157)
+[main] INFO  | org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator | HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration) (JtaPlatformInitiator.java:59)
+[main] INFO  | org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean | Initialized JPA EntityManagerFactory for persistence unit 'default' (AbstractEntityManagerFactoryBean.java:447)
+[main] WARN  | org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration | spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning (JpaBaseConfiguration.java:241)
+[main] DEBUG | org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping | 16 mappings in 'requestMappingHandlerMapping' (AbstractHandlerMethodMapping.java:366)
+[main] DEBUG | org.springframework.web.servlet.handler.SimpleUrlHandlerMapping | Patterns [/webjars/**, /**, /swagger-ui*/*swagger-initializer.js, /swagger-ui*/**] in 'resourceHandlerMapping' (SimpleUrlHandlerMapping.java:187)
+[main] DEBUG | org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter | ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice (RequestMappingHandlerAdapter.java:666)
+[main] DEBUG | org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver | ControllerAdvice beans: 2 @ExceptionHandler, 1 ResponseBodyAdvice (ExceptionHandlerExceptionResolver.java:336)
+[main] INFO  | org.springframework.boot.actuate.endpoint.web.EndpointLinksResolver | Exposing 15 endpoints beneath base path '/actuator' (EndpointLinksResolver.java:60)
+[main] INFO  | com.isi.BackendApplicationTests                              | Started BackendApplicationTests in 25.334 seconds (process running for 30.919) (StartupInfoLogger.java:59)
+[SpringApplicationShutdownHook] DEBUG | org.springframework.web.context.support.GenericWebApplicationContext | Closing org.springframework.web.context.support.GenericWebApplicationContext@22854f2b, started on Sun Jun 22 08:30:07 GMT 2025 (AbstractApplicationContext.java:1158)
+[SpringApplicationShutdownHook] INFO  | org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean | Closing JPA EntityManagerFactory for persistence unit 'default' (AbstractEntityManagerFactoryBean.java:660)
+[SpringApplicationShutdownHook] INFO  | com.zaxxer.hikari.HikariDataSource                           | HikariPool-1 - Shutdown initiated... (HikariDataSource.java:349)
+[SpringApplicationShutdownHook] INFO  | com.zaxxer.hikari.HikariDataSource                           | HikariPool-1 - Shutdown completed. (HikariDataSource.java:351)
