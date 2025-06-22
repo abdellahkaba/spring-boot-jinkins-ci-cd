@@ -16,6 +16,14 @@ pipeline {
 				git branch: 'main', url: 'https://github.com/abdellahkaba/spring-boot-jinkins-ci-cd.git'
         	}
      	}
+
+     	stage('OWASP Dependency Check'){
+			steps{
+				dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'db-check'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
+
 		stage('📦 Vérification des versions') {
 			steps {
 				script {
@@ -58,12 +66,6 @@ pipeline {
 
             }
         }
-
-        //stage("Staging"){
-		//	steps{
-		//		sh 'docker-compose up -d'
-        //    }
-        //}
     }
 
     post {
