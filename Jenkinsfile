@@ -44,20 +44,20 @@ pipeline {
             }
         }
 
-        //stage('🧪 Tests unitaires') {
-		//	steps {
-		//		script {
-		//			if(isUnix()) {
-		//				echo '✅ Exécution des tests unitaires'
-        //        		sh 'mvn test'
-		//			}else {
-		//				echo '✅ Exécution des tests unitaires'
-        //        		sh 'mvn test'
-		//			}
-		//		}
-		//
-        //    }
-        //}
+        stage('🧪 Tests unitaires') {
+			steps {
+				script {
+					if(isUnix()) {
+						echo '✅ Exécution des tests unitaires'
+                		sh 'mvn test "-Dspring-boot.run.profiles=test"'
+					}else {
+						echo '✅ Exécution des tests unitaires'
+                		sh 'mvn test "-Dspring-boot.run.profiles=test"'
+					}
+				}
+
+            }
+        }
 
         //stage("Staging"){
 		//	steps{
