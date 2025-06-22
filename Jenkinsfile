@@ -36,9 +36,9 @@ pipeline {
 			steps {
 				script {
 					if (isUnix()) {
-						sh "mvn clean package -DskipTests"
+						sh 'mvn clean install "-Dspring-boot.run.profiles=test"'
                     } else {
-						bat "mvn clean package -DskipTests"
+						bat 'mvn clean install "-Dspring-boot.run.profiles=test"'
                     }
                 }
             }
