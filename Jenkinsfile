@@ -6,13 +6,16 @@ pipeline {
         jdk 'JDK'       // Idem
     }
 
-     stage('📥 Récupération du code') {
-		steps {
-			git branch: 'main', url: 'https://github.com/abdellahkaba/spring-boot-jinkins-ci-cd.git'
-            }
-        }
+
+
 
     stages {
+
+		stage('📥 Récupération du code') {
+			steps {
+				git branch: 'main', url: 'https://github.com/abdellahkaba/spring-boot-jinkins-ci-cd.git'
+        	}
+     	}
 		stage('📦 Vérification des versions') {
 			steps {
 				script {
