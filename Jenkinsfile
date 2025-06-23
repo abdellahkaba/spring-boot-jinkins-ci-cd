@@ -2,7 +2,8 @@ pipeline {
 	agent any
     tools {
 		maven 'Maven'   // Nom défini dans "Global Tool Configuration"
-        jdk 'JDK'       // Idem
+        jdk 'JDK'// Idem
+        dependencyCheck 'db-check
     }
     stages {
 		stage('📥 Récupération du code') {
