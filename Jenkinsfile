@@ -4,7 +4,6 @@ pipeline {
     tools {
 		maven 'Maven'              // Nom défini dans "Global Tool Configuration"
         jdk 'JDK'                  // Nom défini aussi dans "Global Tool Configuration"
-        dependencyCheck 'db-check' // ✅ GUILLEMETS FERMÉS ICI
     }
 
     stages {
@@ -19,7 +18,7 @@ pipeline {
 			steps {
 				catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
 					dependencyCheck additionalArguments: '--scan ./ --format HTML',
-                                     odcInstallation: 'db-check' // ✅ virgule avant ce paramètre
+                                     odcInstallation: 'db-check'
                     dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
                 }
             }
