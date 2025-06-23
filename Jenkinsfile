@@ -1,24 +1,21 @@
 pipeline {
 	agent any
-
     tools {
 		maven 'Maven'   // Nom défini dans "Global Tool Configuration"
         jdk 'JDK'       // Idem
     }
-
-
-
-
     stages {
-
 		stage('📥 Récupération du code') {
 			steps {
 				git branch: 'main', url: 'https://github.com/abdellahkaba/spring-boot-jinkins-ci-cd.git'
         	}
      	}
-
-
-
+     	stage('OWASP Dependency Check'){
+			steps{
+				dependencyCheck additionalArguments: '--scan ./ --format HTML ', odcInstallation: 'db-check'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
 		stage('📦 Vérification des versions') {
 			steps {
 				script {
@@ -32,9 +29,6 @@ pipeline {
                 }
             }
         }
-
-
-
         stage('🏗️ Compilation du projet') {
 			steps {
 				script {
