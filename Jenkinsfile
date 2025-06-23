@@ -6,6 +6,11 @@ pipeline {
         jdk 'JDK'                  // Nom défini aussi dans "Global Tool Configuration"
     }
 
+    environment {
+		SONAR_SCANNER_HOME = tool 'SonarQubeScanner'
+        SONAR_TOKEN = credentials('sonar-token')
+    }
+
     stages {
 
 		stage('📥 Récupération du code') {
@@ -59,6 +64,45 @@ pipeline {
 						sh 'mvn test -Dspring-boot.run.profiles=test'
                     } else {
 						bat 'mvn test -Dspring-boot.run.profiles=test'
+                    }
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+			steps {
+				withSonarQubeEnv('SonarQube') {
+					script {
+						def scannerHome = tool 'SonarQubeScanner'
+                        withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN_SECURE')]) {
+							if (isUnix()) {
+								sh """
+                                    ${scannerHome}/bin/sonar-scanner \
+                                    -Dsonar.projectKey=gestion-produits \
+                                    -Dsonar.projectName='gestion-produits' \
+                                    -Dsonar.java.binaries=target/classes \
+                                    -Dsonar.sources=src/main/java \
+                                    -Dsonar.tests=src/test/java \
+                                    -Dsonar.junit.reportPaths=target/surefire-reports \
+                                    -Dsonar.jacoco.reportPaths=target/jacoco.exec \
+                                    -Dsonar.token=$SONAR_TOKEN_SECURE \
+                                    -Dsonar.host.url=http://host.docker.internal:9000
+                                """
+                            } else {
+								bat """
+                                    ${scannerHome}/bin/sonar-scanner \
+                                    -Dsonar.projectKey=gestion-produits \
+                                    -Dsonar.projectName='gestion-produits' \
+                                    -Dsonar.java.binaries=target/classes \
+                                    -Dsonar.sources=src/main/java \
+                                    -Dsonar.tests=src/test/java \
+                                    -Dsonar.junit.reportPaths=target/surefire-reports \
+                                    -Dsonar.jacoco.reportPaths=target/jacoco.exec \
+                                    -Dsonar.token=$SONAR_TOKEN_SECURE \
+                                    -Dsonar.host.url=http://host.docker.internal:9000
+                                """
+                            }
+                        }
                     }
                 }
             }
