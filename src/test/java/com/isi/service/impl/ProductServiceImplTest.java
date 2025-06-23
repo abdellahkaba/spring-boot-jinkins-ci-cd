@@ -2,6 +2,7 @@ package com.isi.service.impl;
 
 import com.isi.dto.ProductRequest;
 import com.isi.dto.ProductResponse;
+import com.isi.exception.EntityExistsException;
 import com.isi.exception.EntityNotFoundException;
 import com.isi.mapper.ProductMapper;
 import com.isi.model.Category;
@@ -49,6 +50,15 @@ class ProductServiceImplTest {
         ProductResponse response = productService.newProduct(getProductRequest());
         assertNotNull(response);
         assertEquals("Product", response.getName());
+    }
+
+    @Test
+    void addProductShouldThrowException_WhenProductAlreadyExists() {
+        when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(getCategory()));
+        when(productRepository.findByName(any())).thenReturn(Optional.of(getProduct()));
+
+        EntityExistsException  exception = assertThrows(EntityExistsException.class, () -> productService.newProduct(getProductRequest()));
+        assertEquals("Product already exists", exception.getMessage());
     }
 
     @Test

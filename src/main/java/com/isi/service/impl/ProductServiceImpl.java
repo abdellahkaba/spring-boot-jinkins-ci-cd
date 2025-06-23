@@ -49,7 +49,8 @@ public class ProductServiceImpl implements ProductService {
     public ProductResponse getProductById(Long id) {
         return repository.findById(id)
                 .map(mapper::toProductResponse)
-                .orElseThrow(() -> new EntityNotFoundException(messageSource.getMessage("product.notfound", new Object[]{id}, Locale.getDefault())));
+                .orElseThrow(() -> new EntityNotFoundException(messageSource.getMessage("product.notfound",
+                        new Object[]{id}, Locale.getDefault())));
     }
 
     @Override

@@ -21,7 +21,6 @@ public class APIExceptionHandler {
         return new ResponseEntity<>(exception, e.getStatus());
     }
 
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ExceptionResponse> handleValidationExceptions(MethodArgumentNotValidException exp) {
         Set<String> errors = new HashSet<>();
