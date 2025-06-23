@@ -54,12 +54,19 @@ class ProductServiceImplTest {
 
     @Test
     void addProductShouldThrowException_WhenProductAlreadyExists() {
+        ProductRequest request = getProductRequest();
         when(categoryRepository.findById(anyLong())).thenReturn(Optional.of(getCategory()));
-        when(productRepository.findByName(any())).thenReturn(Optional.of(getProduct()));
+        when(productRepository.findByName(request.getName())).thenReturn(Optional.of(getProduct()));
+        // Mock du message internationalisé
+        when(messageSource.getMessage(eq("product.exists"), any(), any()))
+                .thenReturn("Product already exists");
+        EntityExistsException exception = assertThrows(EntityExistsException.class, () -> {
+            productService.newProduct(request);
+        });
 
-        EntityExistsException  exception = assertThrows(EntityExistsException.class, () -> productService.newProduct(getProductRequest()));
         assertEquals("Product already exists", exception.getMessage());
     }
+
 
     @Test
     void addProductKO_CategoryNotFound() {
