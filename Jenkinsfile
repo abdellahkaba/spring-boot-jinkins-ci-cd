@@ -1,26 +1,31 @@
 pipeline {
 	agent any
+
     tools {
-		maven 'Maven'   // Nom défini dans "Global Tool Configuration"
-        jdk 'JDK'  // Idem
-        dependencyCheck 'db-check
+		maven 'Maven'              // Nom défini dans "Global Tool Configuration"
+        jdk 'JDK'                  // Nom défini aussi dans "Global Tool Configuration"
+        dependencyCheck 'db-check' // ✅ GUILLEMETS FERMÉS ICI
     }
+
     stages {
+
 		stage('📥 Récupération du code') {
 			steps {
 				git branch: 'main', url: 'https://github.com/abdellahkaba/spring-boot-jinkins-ci-cd.git'
-        	}
-     	}
+            }
+        }
+
         stage('OWASP Dependency Check') {
 			steps {
 				catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
 					dependencyCheck additionalArguments: '--scan ./ --format HTML',
-                            odcInstallation: 'db-check'
-            		dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-        		}
-    		}
-		}
-		stage('📦 Vérification des versions') {
+                                     odcInstallation: 'db-check' // ✅ virgule avant ce paramètre
+                    dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+                }
+            }
+        }
+
+        stage('📦 Vérification des versions') {
 			steps {
 				script {
 					if (isUnix()) {
@@ -33,6 +38,7 @@ pipeline {
                 }
             }
         }
+
         stage('🏗️ Compilation du projet') {
 			steps {
 				script {
@@ -48,18 +54,17 @@ pipeline {
         stage('🧪 Tests unitaires') {
 			steps {
 				script {
-					if(isUnix()) {
-						echo '✅ Exécution des tests unitaires'
-                		sh 'mvn test "-Dspring-boot.run.profiles=test"'
-					}else {
-						echo '✅ Exécution des tests unitaires'
-                		sh 'mvn test "-Dspring-boot.run.profiles=test"'
-					}
-				}
-
+					echo '✅ Exécution des tests unitaires'
+                    if (isUnix()) {
+						sh 'mvn test -Dspring-boot.run.profiles=test'
+                    } else {
+						bat 'mvn test -Dspring-boot.run.profiles=test'
+                    }
+                }
             }
         }
     }
+
     post {
 		success {
 			echo '🎉 Build et tests réussis !'
