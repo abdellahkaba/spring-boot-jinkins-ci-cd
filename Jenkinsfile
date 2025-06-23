@@ -2,7 +2,7 @@ pipeline {
 	agent any
     tools {
 		maven 'Maven'   // Nom défini dans "Global Tool Configuration"
-        jdk 'JDK'// Idem
+        jdk 'JDK'  // Idem
         dependencyCheck 'db-check
     }
     stages {
@@ -60,7 +60,6 @@ pipeline {
             }
         }
     }
-
     post {
 		success {
 			echo '🎉 Build et tests réussis !'
