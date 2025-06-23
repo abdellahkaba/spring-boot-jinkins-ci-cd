@@ -16,6 +16,15 @@ pipeline {
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
+        stage('OWASP Dependency Check') {
+			steps {
+				catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+					dependencyCheck additionalArguments: '--scan ./ --format HTML',
+                            odcInstallation: 'db-check'
+            		dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+        		}
+    		}
+		}
 		stage('📦 Vérification des versions') {
 			steps {
 				script {
