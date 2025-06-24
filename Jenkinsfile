@@ -115,42 +115,11 @@ pipeline {
             }
         }
 
-        stage('🔍 Check Docker') {
+        stage('Test Docker') {
 			steps {
-				sh 'which docker || echo "Docker NOT found!"'
-        		sh 'docker --version || echo "Docker command failed!"'
-    		}
-		}
-
-        stage("Docker Build & Push"){
-			steps{
-				script{
-					withDockerRegistry(credentialsId: 'docker-hub', toolName: 'docker') {
-						def imageName = "backend-product-api"
-                        def buildTag = "${imageName}:${BUILD_NUMBER}"
-                        def latestTag = "${imageName}:latest"  // Define latest tag
-
-                        if(isUnix()){
-							sh """
-                                docker build -t ${imageName} -f Dockerfile .
-                                docker tag ${imageName} abdellahkaba7/${buildTag}
-                                docker tag ${imageName} abdellahkaba7/${latestTag}
-                                docker push abdellahkaba7/${buildTag}
-                                docker push abdellahkaba7/${latestTag}
-                            """
-                        }else {
-							bat """
-                                docker build -t ${imageName} -f Dockerfile .
-                                docker tag ${imageName} abdellahkaba7/${buildTag}
-                                docker tag ${imageName} abdellahkaba7/${latestTag}
-                                docker push abdellahkaba7/${buildTag}
-                                docker push abdellahkaba7/${latestTag}
-                            """
-                        }
-                        env.BUILD_TAG = buildTag
-
-                    }
-
+				script {
+					sh 'docker --version'
+                    sh 'docker ps'
                 }
             }
         }
