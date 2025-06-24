@@ -140,7 +140,7 @@ pipeline {
                             """
                         }else {
 							bat """
-                                docker build -t ${imageName} -f Dockerfile.final .
+                                docker build -t ${imageName} -f Dockerfile .
                                 docker tag ${imageName} abdellahkaba7/${buildTag}
                                 docker tag ${imageName} abdellahkaba7/${latestTag}
                                 docker push abdellahkaba7/${buildTag}
