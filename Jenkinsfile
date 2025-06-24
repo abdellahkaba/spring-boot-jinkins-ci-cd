@@ -4,7 +4,6 @@ pipeline {
     triggers {
 		// Avec ngrok : déclenchement instantané via webhook
         githubPush()
-
         // Backup : polling SCM au cas où
         pollSCM('H/5 * * * *')
     }
@@ -115,6 +114,40 @@ pipeline {
                 }
             }
         }
+
+        stage("Docker Build & Push"){
+			steps{
+				script{
+					withDockerRegistry(credentialsId: 'docker-hub', toolName: 'docker') {
+						def imageName = "backend-product-api"
+                        def buildTag = "${imageName}:${BUILD_NUMBER}"
+                        def latestTag = "${imageName}:latest"  // Define latest tag
+
+                        if(isUnix()){
+							sh """
+                                docker build -t ${imageName} -f Dockerfile .
+                                docker tag ${imageName} abdellahkaba7/${buildTag}
+                                docker tag ${imageName} abdellahkaba7/${latestTag}
+                                docker push abdellahkaba7/${buildTag}
+                                docker push abdellahkaba7/${latestTag}
+                            """
+                        }else {
+							bat """
+                                docker build -t ${imageName} -f Dockerfile.final .
+                                docker tag ${imageName} abdellahkaba7/${buildTag}
+                                docker tag ${imageName} abdellahkaba7/${latestTag}
+                                docker push abdellahkaba7/${buildTag}
+                                docker push abdellahkaba7/${latestTag}
+                            """
+                        }
+                        env.BUILD_TAG = buildTag
+
+                    }
+
+                }
+            }
+        }
+
     }
 
     post {
