@@ -115,6 +115,13 @@ pipeline {
             }
         }
 
+        stage('🔍 Check Docker') {
+			steps {
+				sh 'which docker || echo "Docker NOT found!"'
+        		sh 'docker --version || echo "Docker command failed!"'
+    		}
+		}
+
         stage("Docker Build & Push"){
 			steps{
 				script{
