@@ -115,19 +115,12 @@ pipeline {
             }
         }
 
-		stage('Test Docker') {
+		stage('Vérif Docker') {
 			steps {
-				script {
-					try {
-						sh 'docker --version'
-                    } catch (Exception e) {
-						echo "❌ Docker n'est pas reconnu : ${e}"
-                    }
-                }
-            }
-        }
-
-
+				sh 'docker --version'
+        		sh 'docker ps'
+      		}
+    	}
     }
 
     post {
