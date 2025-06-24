@@ -1,5 +1,13 @@
 pipeline {
 	agent any
+	    // ✨ AJOUT : Déclencheurs automatiques
+    triggers {
+		// Avec ngrok : déclenchement instantané via webhook
+        githubPush()
+
+        // Backup : polling SCM au cas où
+        pollSCM('H/5 * * * *')
+    }
 
     tools {
 		maven 'Maven'              // Nom défini dans "Global Tool Configuration"
