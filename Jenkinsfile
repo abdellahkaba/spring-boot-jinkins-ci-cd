@@ -115,6 +115,17 @@ pipeline {
             }
         }
 
+		stage('Test Docker') {
+			steps {
+				script {
+					try {
+						sh 'docker --version'
+                    } catch (Exception e) {
+						echo "❌ Docker n'est pas reconnu : ${e}"
+                    }
+                }
+            }
+        }
 
 
     }
