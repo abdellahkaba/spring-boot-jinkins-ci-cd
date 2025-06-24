@@ -1,9 +1,9 @@
 FROM openjdk:17-jdk-slim
 
-LABEL maintainer="Abdoulaye Kaba abdallahkaba98@gmail.com"
+LABEL maintainer="Abdoulaye Kaba <abdallahkaba98@gmail.com>"
 
-COPY target/gestion-produits.jar gestion-produits.jar
-
-ENTRYPOINT ["java","-jar","gestion-produits.jar"]
+WORKDIR /app
+COPY target/gestion-produits.jar app.jar
 
 EXPOSE 8083
+ENTRYPOINT ["java", "-jar", "app.jar"]
